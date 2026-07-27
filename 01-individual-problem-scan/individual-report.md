@@ -52,7 +52,7 @@ Quan sát sau khi scan: các problem trên không rời rạc mà nối thành m
 ┌──────────────────────────────────────────────────────────────┐
 │ PROBLEM CARD #1                                              │
 │                                                              │
-│ Problem 1 câu: Mỗi dự án mới, Tech Lead mất ~32 giờ công    │
+│ Problem : Mỗi dự án mới, Tech Lead mất ~32 giờ công    │
 │ biến ~3.500 trang tài liệu hãng thành docs nội bộ, trong    │
 │ đó riêng bước đọc và định vị đúng nội dung đã chiếm ~12h.   │
 │                                                              │
@@ -73,7 +73,7 @@ Quan sát sau khi scan: các problem trên không rời rạc mà nối thành m
 └──────────────────────────────────────────────────────────────┘
 ```
 
-**Problem 1 câu:**
+**Problem :**
 Mỗi khi nhận dự án mới, Tech Lead mất khoảng 32 giờ công để biến ~3.500 trang tài liệu hãng thành tài liệu nội bộ dùng được cho team, trong đó bước đọc và định vị đúng nội dung trong Reference Manual chiếm nhiều thời gian nhất và không đòi hỏi phán đoán kỹ thuật cao.
 
 **Actor:**
@@ -175,7 +175,7 @@ enterprise agreement) trước khi bàn tiếp về giải pháp.
 
 ## Problem Card #2 — Không có chuẩn chung driver / middleware / kiến trúc module
 
-**Problem 1 câu:**
+**Problem :**
 Team không có chuẩn chung về driver API, error handling và cấu trúc module, nên mỗi dev tự thiết kế một kiểu và mỗi PR driver phải qua ~2-3 vòng review chỉ để thống nhất convention.
 
 **Actor:**
@@ -251,7 +251,7 @@ Card này tôi giữ lại làm **đối chứng cho nhóm**: một bài toán c
 
 ## Problem Card #3 — Dev không tự tìm được câu trả lời trong kho tài liệu
 
-**Problem 1 câu:**
+**Problem :**
 Khi cần một thông tin kỹ thuật cụ thể, dev tìm ~10-15 phút trong Confluence và PDF hãng bằng keyword mà không ra, cuối cùng vẫn phải hỏi Tech Lead qua Teams và chờ.
 
 **Actor:**
