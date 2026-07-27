@@ -2,9 +2,9 @@
 
 **Học viên:** Nguyễn Hoàng Đạt — 2A202601460
 
-> **Ghi chú về số liệu:** Các con số có dấu `~` là ước lượng từ trải nghiệm của tôi ở các dự án gần nhất, chưa đo bằng log hay ticket. Những chỗ này sẽ được kiểm chứng lại ở Phase 4 (quick validation) trước khi dùng làm baseline cho Success Metric.
+> **Ghi chú về số liệu:** Các con số có dấu `~` chỉ là tự ước lượng chung của tôi, chưa đo bằng log hay ticket. Những chỗ này sẽ được kiểm chứng lại ở Phase 4 (quick validation) trước khi dùng làm baseline cho Success Metric.
 
-## Bối cảnh của tôi
+## Bối cảnh giả lập của tôi
 
 Tôi là **Tech Lead của một đội embedded** trong một công ty lớn. Team gồm ~5 developer embedded (mix senior/junior), phát triển firmware cho sản phẩm của công ty.
 
