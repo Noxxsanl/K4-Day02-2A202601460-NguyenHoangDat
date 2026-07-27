@@ -2,7 +2,7 @@
 
 **Học viên:** Nguyễn Hoàng Đạt — 2A202601460
 
-> **Ghi chú về số liệu:** Các con số có dấu `~` chỉ là tự ước lượng chung của tôi, chưa đo bằng log hay ticket. Những chỗ này sẽ được kiểm chứng lại ở Phase 4 (quick validation) trước khi dùng làm baseline cho Success Metric.
+> **Ghi chú về bối cảnh và số liệu:** Bối cảnh Tech Lead embedded trong bài là bối cảnh tôi tự dựng, không phải vị trí tôi đang giữ. Toàn bộ số liệu là ước lượng dựa trên hiểu biết của tôi về quy trình phát triển embedded, chưa đo bằng log thời gian hay số liệu từ bug tracker. Dấu `~` đánh dấu những con số tôi kém chắc chắn nhất. Mọi con số cần được đo lại bằng số liệu thật trước khi dùng làm baseline cho Success Metric.
 
 ## Bối cảnh giả lập của tôi
 
@@ -21,7 +21,7 @@ Phần lớn thời gian và rủi ro của tôi nằm ở khoảng giữa hai r
 
 | # | Lăng kính | Problem quan sát được | Ai chịu ảnh hưởng? | Dấu hiệu thật |
 |---|---|---|---|---|
-| 1 | Lặp lại | Mỗi dự án đổi dòng chip phải đọc lại Reference Manual ~3.300 trang từ đầu rồi viết lại tài liệu nội bộ cho ~9 peripheral (clock, GPIO, UART, SPI, I2C, ADC, DMA, timer, low-power) theo cùng một format | Tech Lead (tôi) | ~20 giờ công/dự án, lặp lại mỗi lần đổi chip (~2-3 dự án/năm) |
+| 1 | Lặp lại | Mỗi dự án đổi dòng chip phải đọc lại Reference Manual ~3.300 trang từ đầu rồi viết lại tài liệu nội bộ cho ~9 peripheral (clock, GPIO, UART, SPI, I2C, ADC, DMA, timer, low-power) theo cùng một format | Tech Lead (tôi) | ~20 giờ công/dự án cho riêng hai bước này (đọc RM ~12h + viết docs ~8h), nằm trong tổng ~32h của cả workflow ở Card #1; lặp lại mỗi lần đổi chip (~2-3 dự án/năm) |
 | 2 | Lặp lại | Dev hỏi lại cùng một loại câu hỏi qua Teams: pin mapping, thứ tự init clock, điều kiện dùng DMA. Câu hỏi lặp theo từng người mới thay vì lặp theo thời gian, nên viết FAQ chỉ giải quyết được một phần | Dev trong team, Tech Lead | ~5-8 câu/tuần trong 4 tuần đầu dự án, mỗi câu ngắt mạch tôi ~15-20 phút |
 | 3 | Tốn thời gian | Chốt một cấu hình phải tra chéo 4 nguồn: RM (mô tả register) + errata (lỗi silicon) + application note (khuyến nghị) + SDK release note (API đã đổi chưa) | Tech Lead | ~30-60 phút cho một cấu hình khó; không tra đủ thì rủi ro dính lỗi errata |
 | 4 | Tốn thời gian | Review PR mất nhiều vòng vì không có chuẩn chung về driver API, error handling, cấu trúc module — mỗi dev viết một kiểu | Tech Lead, dev | ~2-3 vòng review/PR driver, phần lớn comment là về convention chứ không phải logic; dev mới cần ~1-2 tuần mới bắt được convention |
