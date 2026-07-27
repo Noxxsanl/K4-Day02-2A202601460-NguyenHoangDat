@@ -510,101 +510,211 @@ Metric thời gian là metric chính, nhưng **hai guardrail quan trọng ngang 
 
 # Phase 6 — Rule / Workflow / Agent + Decision (25')
 
+**Người chủ trì:** Duy (Devil's advocate + decision owner). Quyết định cuối do cả nhóm đồng thuận.
+
 ## 6.0 — Vị trí trên ma trận
 
-Bài toán của nhóm nằm ở ô nào?
+Nhóm chỉ xét **bước 3** — bước duy nhất định giao cho AI theo future workflow ở mục 5.2. Không xét cả quy trình, vì các bước còn lại đã có lời giải Rule hoặc giữ cho người.
+
+**Bài toán của nhóm nằm ở ô nào?**
 
 ```text
-
+Ô "Độ mơ hồ THẤP + Độ phức tạp THẤP-TRUNG BÌNH"
+→ Theo ma trận: "Rule hoặc workflow đơn giản thường đủ"
 ```
 
-Vì sao?
+**Vì sao?**
 
-```text
+| Chiều | Đánh giá | Lý do |
+|---|---|---|
+| **Độ mơ hồ** | Thấp | Câu hỏi "section nào trong RM nói về cấu hình SPI" có đáp án đúng/sai kiểm được. Mở đúng trang là biết ngay đúng hay sai. Khác hẳn với bước 5 (viết phần "vì sao") vốn có nhiều cách trả lời đều chấp nhận được — nhưng bước 5 đã giữ cho người |
+| **Độ phức tạp** | Thấp - trung bình | Một nguồn dữ liệu (Reference Manual), input rõ (checklist peripheral), output rõ (danh sách section + số trang). AI không cần tự quyết định bước tiếp theo, không cần gọi tool khác |
 
-```
+**Kết luận từ ma trận — và đây là kết luận bất lợi cho nhóm:**
 
-## 6.1 — So sánh Rule / Workflow / Agent
+Ma trận không đẩy bài toán này về phía Agent, thậm chí cũng không đẩy mạnh về phía Workflow. Nó nói *"Rule hoặc workflow đơn giản thường đủ"*.
 
-| Mức | Phương án cho bài toán nhóm | Khi nào đủ | Rủi ro | Chọn? |
-|---|---|---|---|---|
-| **No AI / process fix** | Template docs + checklist peripheral + thư viện tài liệu tái sử dụng | Đủ nếu phần lớn thời gian nằm ở format và cấu trúc | Không giảm được bước đọc/định vị trong RM |  |
-| **Rule** | Script tự nạp tài liệu, index theo peripheral, cảnh báo lệch phiên bản SDK | Đủ cho bước gom và theo dõi phiên bản | Không hiểu được câu hỏi theo ngữ nghĩa |  |
-| **Workflow** | Rule nạp tài liệu → AI trích xuất kèm trích dẫn → người verify → AI draft → người viết phần "vì sao" | Hợp nếu các bước tuyến tính và AI chỉ hỗ trợ vài bước ngôn ngữ | AI trích sai/bịa register; phụ thuộc chất lượng verify |  |
-| **Agent** | Agent tự đọc tài liệu, tự quyết định đọc thêm gì, tự cập nhật docs khi hãng release bản mới | Chỉ cần nếu có nhiều nhánh quyết định và nhiều tool | Rủi ro cao, quyền truy cập rộng, khó truy vết lỗi |  |
+Nhóm buộc phải trả lời: **nếu độ mơ hồ thấp và độ phức tạp thấp, tại sao Rule lại không đủ?** Câu trả lời nằm ở mục 6.1.
+
+## 6.1 — So sánh No AI / Rule / Workflow / Agent
+
+| Mức | Phương án cụ thể cho bài toán nhóm | Giải được bao nhiêu | Khi nào là đủ | Rủi ro | Chọn? |
+|---|---|---|---|---|---|
+| **No AI / process fix** | Template tài liệu + checklist ~9 peripheral + thư viện tài liệu tái sử dụng giữa các dự án cùng họ chip | 32h → ~26h | Đủ nếu phần lớn thời gian nằm ở format và cấu trúc | Không rủi ro. Nhưng không chạm được bước 3 | **Có — làm ngay, ưu tiên số 1** |
+| **Rule** | Thêm: script nạp tài liệu, index theo peripheral, docs-as-code, cảnh báo khi hãng release SDK mới | 32h → **~20h** | Đủ nếu chấp nhận vẫn phải đọc RM thủ công | Không rủi ro bảo mật, không hallucination | **Có — làm ngay, ưu tiên số 2** |
+| **Workflow** | Thêm bước 3: AI trích + định vị nội dung trong RM kèm số trang → người verify | 32h → **~13h** | Hợp vì các bước tuyến tính, AI chỉ hỗ trợ một bước, có nguồn để đối chiếu | AI trích sai/bịa register → lỗi nhân bản ra toàn team. **Rủi ro NDA khi đưa tài liệu hãng lên công cụ AI** | **Chưa — chờ giải quyết C1** |
+| **Agent** | Agent tự đọc tài liệu, tự quyết định đọc thêm gì, tự cập nhật tài liệu khi hãng release bản mới, tự publish | Không ước lượng được | Chỉ cần nếu có nhiều nhánh quyết định và nhiều tool | Quyền truy cập rộng, khó truy vết khi sai, không có điểm dừng cho người kiểm | **Không** |
+
+### Trả lời câu hỏi khó nhất: vì sao Rule không đủ?
+
+Rule đưa được 32h → ~20h, tức **62% mức cải thiện mà không có bất kỳ rủi ro nào**. Phần AI chỉ thêm được 20h → 13h, tức 38% còn lại, nhưng kèm rủi ro hallucination và rủi ro NDA.
+
+Lý do Rule không thể đi xa hơn: bước 3 đòi hỏi **hiểu ngữ nghĩa**. Tìm "section nào nói về cách giữ SPI hoạt động khi vào stop mode" không giải được bằng tìm kiếm từ khóa, vì Reference Manual không dùng đúng cụm từ đó — nội dung nằm rải ở chương power management và chương SPI, mô tả bằng thuật ngữ register. Đây đúng là chỗ Rule bó tay và AI có lợi thế thật.
+
+Nhưng nhóm ghi nhận thẳng: **38% cải thiện có đáng đổi lấy rủi ro NDA và rủi ro tài liệu sai lan ra toàn team hay không, là câu hỏi chưa trả lời được** khi C1 chưa làm rõ và baseline chưa đo.
+
+### Vì sao không chọn Agent
+
+- Workflow là đường thẳng, không có nhánh. Không có bước nào AI cần tự quyết định làm gì tiếp theo.
+- Hậu quả khi sai rất nặng: tài liệu sai lan ra 5 developer, dẫn tới cấu hình sai phần cứng. Cần điểm dừng cho người kiểm, mà Agent thì làm mờ điểm dừng đó.
+- Không có lợi ích nào Agent mang lại mà Workflow không có, trong phạm vi bài toán này.
 
 **Mức chọn:**
 
 ```text
-[Rule / Workflow / Agent]
+Hai mức, triển khai theo thứ tự:
+
+1. No AI + Rule  →  TRIỂN KHAI NGAY (32h → ~20h, không rủi ro)
+2. Workflow      →  CHƯA, chờ giải quyết ràng buộc C1 (NDA) và đo baseline
+
+Không chọn Agent.
 ```
 
-**Vì sao chọn:**
+**Vì sao chọn Workflow (chứ không phải Agent) cho phần AI:**
 
 ```text
-
+- AI chỉ đứng ở đúng một bước (bước 3), không điều phối cả quy trình.
+- Bước đó có độ mơ hồ thấp: output kiểm được bằng cách mở trang được trích dẫn.
+- Có nguồn gốc để đối chiếu (Reference Manual), nên đặt được ràng buộc cứng:
+  không có trích dẫn kiểm được thì không đưa vào tài liệu.
+- Người vẫn verify và vẫn là người duy nhất publish.
+- Workflow không cần tự lập kế hoạch động, nên không cần tới Agent.
 ```
 
-**Vì sao không chọn mức đơn giản hơn:**
+**Vì sao không chọn mức đơn giản hơn — và vì sao nhóm vẫn làm mức đơn giản hơn trước:**
 
 ```text
+Nhóm KHÔNG loại bỏ mức đơn giản hơn. Ngược lại, nhóm chọn làm No AI + Rule
+TRƯỚC, vì ba lý do:
 
+1. Rule lấy được 62% mức cải thiện mà không có rủi ro nào.
+2. Rule không phụ thuộc vào việc giải quyết ràng buộc NDA, nên làm được ngay.
+3. Nếu không có template và checklist (bước 0), phần AI ở bước 3 cũng không
+   chạy được — vì AI cần checklist peripheral làm đầu vào để biết trích cái gì.
+
+Rule không phải phương án thay thế bị loại. Nó là ĐIỀU KIỆN CẦN cho phần AI.
+
+Lý do duy nhất Rule chưa đủ: bước 3 cần hiểu ngữ nghĩa, mà tìm kiếm từ khóa
+thì bó tay. Nhưng 38% cải thiện còn lại có đáng đổi lấy rủi ro hay không thì
+nhóm chưa đủ bằng chứng để khẳng định.
 ```
 
 ## 6.2 — Problem Statement v1
 
+Khác với v0 ở bốn chỗ: thu hẹp phạm vi AI theo kết quả research, bổ sung người chịu trách nhiệm (ràng buộc C4), ghi rõ metric là giả định, và tách mức chọn thành hai giai đoạn.
+
 | Field | Nội dung |
 |---|---|
-| **Actor** |  |
-| **Workflow** |  |
-| **Bottleneck** |  |
-| **Impact** |  |
-| **Success Metric** |  |
-| **Boundary** |  |
-| **AI intervention point** |  |
-| **Mức chọn** | Rule / Workflow / Agent |
-| **Rủi ro & người thật kiểm tra** |  |
+| **Actor** | Tech Lead của đội embedded (~5 developer), là người duy nhất chịu trách nhiệm viết tài liệu kỹ thuật nội bộ cho mỗi dự án dùng dòng chip mới. Người dùng đầu ra là 5 developer trong team. |
+| **Workflow** | Nhận tài liệu hãng → lọc peripheral theo spec sản phẩm → đọc và định vị nội dung trong Reference Manual ~3.300 trang → tra chéo errata/AN/SDK → viết tài liệu nội bộ kèm phần bối cảnh sản phẩm → senior review → publish cho team. ~32 giờ công, lặp 2-3 lần/năm. |
+| **Bottleneck** | **Bước 3 — đọc và định vị nội dung trong Reference Manual, ~12 giờ (37% tổng thời gian).** Là công việc tìm kiếm và trích xuất, không đòi hỏi phán đoán kỹ thuật. Tách riêng với bước 5 (~8 giờ) là bottleneck chất lượng, nơi Tech Lead viết phần bối cảnh sản phẩm — phần này giữ cho người. |
+| **Impact** | ~32 giờ công/dự án cho một người, nằm trên đường găng khởi động dự án. Kéo theo ~2-3 bug/dự án loại "làm đúng docs nhưng vẫn sai", mỗi bug tốn ~0.5-1 ngày để truy. |
+| **Success Metric** | Giai đoạn 1 (Rule): ~32h → ~20h. Giai đoạn 2 (thêm AI): ~20h → dưới 16h. Guardrail: bug loại `doc-gap` không tăng (≤3/dự án); 100% claim kỹ thuật có trích dẫn kiểm được. **Toàn bộ số hiện trạng là ước lượng chưa đo — việc đầu tiên của pilot là đo lại baseline.** |
+| **Boundary** | **Làm:** AI trích xuất và định vị nội dung trong Reference Manual theo checklist peripheral, bắt buộc kèm số trang và tên register.<br>**Không làm:** AI không viết phần khuyến nghị áp dụng và đánh đổi; không đọc errata để tự kết luận cấu hình hợp lệ; không tự publish; không thay người chịu trách nhiệm. Claim không có trích dẫn kiểm được thì không vào tài liệu. |
+| **AI intervention point** | **Đúng một điểm: bước 3.** Sau khi checklist peripheral đã có (bước 2), trước khi Tech Lead verify (bước 4). Sáu bước còn lại là người hoặc Rule. |
+| **Mức chọn** | **Giai đoạn 1 — No AI + Rule (làm ngay).** Giai đoạn 2 — Workflow, chỉ triển khai sau khi giải quyết ràng buộc NDA. Không chọn Agent. |
+| **Rủi ro & người thật kiểm tra** | **Rủi ro:** AI trích sai trang hoặc bịa tên register → tài liệu sai nhân bản ra 5 developer → cấu hình sai phần cứng. Rủi ro bảo mật: đưa tài liệu hãng có NDA lên công cụ AI.<br>**Người kiểm:** Tech Lead verify trích dẫn trên PDF gốc (bước 4) và là người duy nhất publish. Senior dev review lần hai (bước 6).<br>**Người chịu trách nhiệm cuối:** Tech Lead. AI không được ghi nhận là tác giả của bất kỳ claim kỹ thuật nào. |
 
 ## 6.3 — Final decision
 
 | Câu hỏi | Yes / Not Yet / No | Ghi chú |
 |---|---|---|
-| Actor và workflow đã rõ chưa? |  |  |
-| Baseline và success metric đã đo được chưa? |  |  |
-| Có data/input đủ dùng chưa? |  | Gắn với ràng buộc NDA ở mục 4.3 |
-| Nếu AI sai, hậu quả có chấp nhận được không? |  | Sai register → cấu hình sai phần cứng |
-| Có người review/owner vận hành không? |  |  |
-| Có cách non-AI đơn giản hơn không? |  |  |
+| Actor và workflow đã rõ chưa? | **Yes** | Workflow 7 bước có actor, input, output, thời gian, handoff đầy đủ ở mục 5.1 |
+| Baseline và success metric đã đo được chưa? | **Not Yet** | Baseline ~32h là ước lượng của một người, chưa có log. Ràng buộc C3 |
+| Có data/input đủ dùng chưa? | **Not Yet** | Tài liệu có sẵn, nhưng **chưa rõ có được phép đưa vào công cụ AI hay không**. Ràng buộc chặn C1 |
+| Nếu AI sai, hậu quả có chấp nhận được không? | **Yes, có điều kiện** | Chấp nhận được **chỉ khi** giữ ràng buộc bắt buộc trích dẫn + verify + review senior. Bỏ một trong ba lớp này thì không chấp nhận được |
+| Có người review/owner vận hành không? | **Yes** | Tech Lead verify và publish; senior dev review lần hai |
+| Có cách non-AI đơn giản hơn không? | **Yes** | Rule đạt ~62% mức cải thiện mà không có rủi ro. Đây là lý do chính dẫn tới quyết định dưới đây |
 
 **Decision:**
 
 ```text
-[Go / Not Yet / No-Go]
+NOT YET cho phần AI (Workflow).
+GO NGAY cho phần No AI + Rule.
 ```
 
 **Lý do:**
 
 ```text
+Nhóm chọn Not Yet cho phần AI vì ba lý do, xếp theo mức độ quan trọng:
 
+1. RÀNG BUỘC CHẶN CHƯA GIẢI QUYẾT (C1)
+   Tài liệu hãng thường kèm NDA. Nếu công ty không cho phép đưa tài liệu lên
+   công cụ AI cloud, toàn bộ phương án Workflow phải làm lại theo hướng
+   self-hosted với chi phí và công sức khác hẳn. Quyết định Go khi chưa biết
+   điều này là quyết định trên giả định.
+
+2. BASELINE CHƯA ĐO (C3)
+   Con số 32h là ước lượng của một người. Nếu thực tế chỉ 15h thì mức cải
+   thiện của Rule đã đủ tốt và phần AI mất phần lớn giá trị.
+
+3. RULE ĐÃ LẤY ĐƯỢC 62% MÀ KHÔNG CÓ RỦI RO
+   Làm Rule trước là quyết định đúng về mặt thứ tự, bất kể sau này có làm AI
+   hay không. Rule cũng là điều kiện cần: không có checklist peripheral thì
+   AI ở bước 3 không có đầu vào để làm việc.
+
+Không chọn No-Go, vì bước 3 có khoảng trống thật mà Rule không giải được, và
+bài toán có nguồn gốc kiểm chứng được nên rủi ro AI là kiểm soát được — chỉ
+là chưa đủ điều kiện để bắt đầu.
 ```
 
-**Nếu Go, pilot nhỏ nhất là:**
+**Việc làm ngay (phần Go — không cần AI, không cần xin phép ai):**
 
 ```text
+1. Viết template tài liệu nội bộ + checklist ~9 peripheral.  (bước 0)
+2. Script nạp tài liệu và index theo peripheral.             (bước 1)
+3. Chuyển publish sang docs-as-code.                          (bước 7)
 
+Kỳ vọng: ~32h → ~20h. Không có rủi ro bảo mật, không có hallucination.
+Đây cũng là hạ tầng bắt buộc cho giai đoạn 2 nếu sau này làm AI.
 ```
 
 **Nếu Not Yet, cần validate gì trước:**
 
 ```text
+Theo thứ tự ưu tiên:
 
+1. LÀM RÕ CHÍNH SÁCH NDA (C1) — việc chặn, phải làm đầu tiên.
+   Đọc điều khoản trên trang tải tài liệu của hãng; xác nhận công ty cho phép
+   dùng loại công cụ AI nào (cloud / self-hosted / có thỏa thuận doanh nghiệp).
+
+2. ĐO BASELINE THẬT (C3).
+   Log thời gian theo từng bước trong một dự án. Nếu bước 3 không thật sự
+   chiếm ~37% thời gian thì phải chọn lại bottleneck.
+
+3. PHỎNG VẤN 2-3 NGƯỜI LÀM EMBEDDED THẬT (mục 4.1, chưa làm được).
+   Đặc biệt câu 4: họ có bàn giao tài liệu cho người khác không? Nếu không
+   thì bài toán thuộc cụm D chứ không phải cụm A, và lựa chọn candidate ở
+   Phase 3 phải xem lại.
+
+4. THỬ NGHIỆM NHỎ ĐỂ ĐO TỈ LỆ TRÍCH DẪN SAI.
+   Cho AI trích 20 mục từ một chương RM đã biết đáp án, đếm bao nhiêu trích
+   dẫn sai trang hoặc bịa tên register. Nếu tỉ lệ sai cao thì thời gian verify
+   ở bước 4 sẽ vượt xa 3h và toàn bộ lợi ích biến mất.
+
+TIÊU CHÍ CHUYỂN TỪ NOT YET SANG GO:
+- C1 được xác nhận là cho phép, và
+- baseline đo thật cho thấy bước 3 vẫn là bottleneck lớn nhất, và
+- tỉ lệ trích dẫn sai ở thử nghiệm nhỏ đủ thấp để verify trong ~3h.
+Thiếu một trong ba thì vẫn giữ Not Yet.
 ```
 
 **Nếu No-Go, nên làm gì thay AI:**
 
 ```text
+Dừng ở mức Rule: template + checklist + docs-as-code + cảnh báo lệch phiên
+bản SDK. Kết hợp với việc dùng Application Note của hãng làm nguồn chính cho
+phần "khi nào dùng" ở các use case phổ biến.
 
+Phương án này đạt ~20h/dự án, không rủi ro, và vẫn giải quyết được vấn đề
+tài liệu nội bộ lệch phiên bản khi hãng release SDK mới.
 ```
+
+### Ghi nhận bất đồng trong nhóm
+
+Duy (devil's advocate) đặt câu hỏi: nếu Rule đã lấy 62% mà không rủi ro, và ràng buộc NDA có thể khiến phần AI không bao giờ triển khai được, thì nhóm có đang giữ phần AI chỉ vì đây là lab về AI hay không?
+
+Nhóm trả lời: bước 3 có khoảng trống thật mà tìm kiếm từ khóa không giải được, nên phần AI có lý do kỹ thuật chứ không phải lý do hình thức. Nhưng nhóm chấp nhận rằng nếu C1 cho kết quả cấm, quyết định cuối sẽ chuyển thành **No-Go cho AI** và dừng hẳn ở mức Rule — và đó vẫn là một kết quả tốt.
 
 ---
 
