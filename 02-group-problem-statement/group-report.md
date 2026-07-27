@@ -184,6 +184,15 @@ Hai việc phải làm ở Phase 4, xuất phát trực tiếp từ hai điểm 
 
 Ngoài ra phải làm rõ ràng buộc NDA (mục 4.3) trước khi bàn giải pháp ở Phase 6.
 
+> **Cập nhật sau Phase 4** — bảng score ở trên giữ nguyên như lúc chấm ở Phase 3 để làm bản ghi trung thực. Kết quả sau khi làm Phase 4:
+>
+> | Tiêu chí | Điểm Phase 3 | Sau Phase 4 | Căn cứ |
+> |---|---:|---:|---|
+> | Pain có evidence | 3 | **4** | Phỏng vấn 1 người làm embedded xác nhận bottleneck và xác nhận có bàn giao tài liệu cho người khác. Chưa lên 5 vì n=1 và baseline vẫn chưa đo |
+> | Nhóm hiểu domain | 3 | **4** | Đạt đã giải thích lại workflow 7 bước, cả nhóm phản biện được (ràng buộc C2) |
+>
+> Tổng cập nhật: **31 → 33/35**. Ràng buộc NDA cũng đã được làm rõ là cho phép — xem mục 4.3.
+
 ---
 
 # Phase 4 — Quick Validation + Research (30')
@@ -262,20 +271,55 @@ Cách dùng đúng: đưa vào phần bối cảnh để cho thấy vấn đề 
 
 | Nguồn | Số mẫu | Tín hiệu xác nhận | Tín hiệu phản bác | Nhóm sửa problem thế nào |
 |---|---:|---|---|---|
-| Interview người làm embedded (tầng 1) |  |  |  |  |
-| Interview / poll sinh viên (tầng 2) |  |  |  |  |
-| Nguồn thứ cấp (tầng 3) | 3 bài (S1, S2, S3) |  |  |  |
+| Interview người làm embedded (tầng 1) | 1 | **Câu 3:** bước đọc và tìm nội dung trong tài liệu là bước tốn thời gian nhất → xác nhận bottleneck bước 3.<br>**Câu 4:** có viết lại tài liệu cho người khác dùng, không chỉ ghi cho riêng mình → xác nhận bài toán thuộc cụm A | Không có tín hiệu phản bác | Không sửa problem. Nhưng n=1 là mẫu quá nhỏ để xác nhận baseline ~32h |
+| Interview / poll sinh viên (tầng 2) | 0 | — | — | Không thực hiện được trong thời lượng lab |
+| Nguồn thứ cấp (tầng 3) | 3 bài (S1, S2, S3) | Xác nhận pattern chung: tài liệu kỹ thuật kém làm chậm người mới và làm tăng thời gian onboarding | Không nguồn nào phản bác. Nhưng cũng không nguồn nào nói riêng về việc chắt lọc datasheet, nên **không xác nhận được bottleneck bước 3 hay baseline ~32h** | Không sửa |
 
 **Insight sau validation:**
 
 ```text
-[Điền sau]
+HAI ĐIỀU ĐƯỢC XÁC NHẬN (từ phỏng vấn tầng 1):
+
+1. Bottleneck nằm đúng ở bước đọc và định vị nội dung trong tài liệu, không
+   phải ở bước viết hay bước format. Điều này khớp với giả định của nhóm ở
+   Phase 3 và là cơ sở để đặt AI vào bước 3 chứ không phải bước khác.
+
+2. Người làm thật CÓ bàn giao tài liệu cho người khác dùng, không chỉ ghi
+   chú cho riêng mình. Điều này xác nhận bài toán thuộc cụm A (biến nguồn thô
+   thành nội dung người khác dùng được), không phải cụm D. Đây là câu hỏi
+   nhóm lo nhất khi chọn candidate ở Phase 3.
+
+MỘT ĐIỀU CHƯA XÁC NHẬN ĐƯỢC:
+
+3. Baseline ~32 giờ công/dự án. Người được phỏng vấn xác nhận thứ tự các bước
+   tốn thời gian, nhưng nhóm chưa thu được con số cụ thể để đối chiếu.
+   Ràng buộc C3 vẫn còn.
+
+GIỚI HẠN PHẢI GHI RÕ: n = 1. Một người xác nhận đúng hướng thì tăng độ tin
+cậy, nhưng không đủ để coi là đã kiểm chứng. Mẫu quá nhỏ để loại trừ khả năng
+người này là trường hợp cá biệt.
 ```
 
 **Nhóm đã sửa gì sau validation:**
 
 ```text
-[Điền sau]
+Nhóm KHÔNG sửa Problem Statement sau validation.
+
+Lý do: nhóm đã chốt trước bốn điều kiện phản bác (bảng ở trên), và KHÔNG điều
+kiện nào bị kích hoạt:
+- Không có ai nói bước đọc RM chỉ mất 2-3h → baseline không bị bác.
+- Người được hỏi nói CÓ bàn giao tài liệu cho người khác → không phải chuyển
+  sang cụm D, không cần đổi candidate sang #13.
+- Không có ai nói code mẫu / Application Note đã đủ dùng.
+- Có tìm được người từng gặp pain này.
+
+Vì cả hai tín hiệu thu được đều xác nhận đúng hướng và không có tín hiệu phản
+bác, nhóm giữ nguyên problem. Đây là "không sửa vì được xác nhận", khác với
+"không sửa vì không có thông tin".
+
+Tuy nhiên nhóm ghi rõ: với n=1, mức xác nhận này chỉ đủ để đi tiếp, không đủ
+để coi baseline là số đã đo. Điểm "Pain có evidence" ở bảng 3.4 nâng từ 3 lên
+4, không lên 5.
 ```
 
 ## 4.2 — Research giải pháp đã có
@@ -343,12 +387,14 @@ Mục này không có trong worksheet gốc. Nhóm thêm vào vì phát hiện c
 
 | # | Ràng buộc | Vì sao quan trọng | Cách làm rõ | Tình trạng | Ảnh hưởng tới quyết định |
 |---|---|---|---|---|---|
-| C1 | **Tài liệu hãng kèm NDA** — được xử lý bằng công cụ AI nào? | Datasheet và reference manual thường có điều khoản hạn chế phân phối. Đưa lên dịch vụ AI cloud có thể là vi phạm hợp đồng với hãng, không chỉ là rủi ro kỹ thuật | Đọc điều khoản trên trang tải tài liệu của hãng; hỏi người làm thật xem công ty họ có chính sách gì về công cụ AI | Chưa làm rõ | Nếu cấm dịch vụ cloud thì chỉ còn phương án self-hosted, chi phí và công sức tăng mạnh → nghiêng hẳn về **Not Yet** |
-| C2 | **Nhóm không có domain expert thật** | Chỉ Đạt nắm domain embedded. Nếu 4 người còn lại không hiểu đủ để phản biện thì bảng score 3.4 và mọi quyết định sau đó mất giá trị | Đạt giải thích lại workflow 7 bước; 4 người còn lại phải đặt được ít nhất 1 câu hỏi phản biện mỗi người | Chưa làm rõ | Nếu không đạt, nhóm phải hạ điểm "Nhóm hiểu domain" và cân nhắc đổi sang #13 hoặc #14 |
-| C3 | **Baseline ~32 giờ chưa đo** | Toàn bộ metric của Problem Statement dựa trên con số này | Kết quả mục 4.1 | Chưa đo | Nếu lệch xa thì phải viết lại Success Metric ở PS v0 và v1 |
-| C4 | **Ai là người vận hành và chịu trách nhiệm** nếu tài liệu do AI hỗ trợ tạo ra bị sai | Trong embedded, tài liệu sai dẫn tới cấu hình sai phần cứng. Cần rõ ai ký duyệt | Xác định trong Boundary của PS v1 | Chưa làm rõ | Không có người chịu trách nhiệm rõ ràng thì không được Go |
+| C1 | **Tài liệu hãng kèm NDA** — được xử lý bằng công cụ AI nào? | Datasheet và reference manual thường có điều khoản hạn chế phân phối. Đưa lên dịch vụ AI cloud có thể là vi phạm hợp đồng với hãng, không chỉ là rủi ro kỹ thuật | Đọc điều khoản trên trang tải tài liệu của hãng; hỏi người làm thật xem công ty họ có chính sách gì về công cụ AI | ✅ **Đã làm rõ — được phép dùng công cụ AI** | **Ràng buộc chặn đã được gỡ.** Phương án Workflow trở nên khả thi mà không cần bắt buộc self-hosted |
+| C2 | **Nhóm không có domain expert thật** | Chỉ Đạt nắm domain embedded. Nếu 4 người còn lại không hiểu đủ để phản biện thì bảng score 3.4 và mọi quyết định sau đó mất giá trị | Đạt giải thích lại workflow 7 bước; 4 người còn lại phải đặt được ít nhất 1 câu hỏi phản biện mỗi người | ✅ **Đã làm rõ** — Đạt đã giải thích lại workflow, cả nhóm nắm được và phản biện được | Điểm "Nhóm hiểu domain" ở bảng 3.4 nâng từ 3 lên 4. Không cần đổi candidate |
+| C3 | **Baseline ~32 giờ chưa đo** | Toàn bộ metric của Problem Statement dựa trên con số này | Kết quả mục 4.1 | ⚠️ **Chưa đo** — phỏng vấn xác nhận đúng thứ tự các bước tốn thời gian, nhưng chưa có con số | **Ràng buộc còn lại duy nhất.** Metric vẫn phải ghi là giả định; đo baseline là việc đầu tiên của pilot |
+| C4 | **Ai là người vận hành và chịu trách nhiệm** nếu tài liệu do AI hỗ trợ tạo ra bị sai | Trong embedded, tài liệu sai dẫn tới cấu hình sai phần cứng. Cần rõ ai ký duyệt | Xác định trong Boundary của PS v1 | ✅ **Đã làm rõ ở PS v1 (mục 6.2)** — Tech Lead verify, publish và chịu trách nhiệm cuối; senior dev review lần hai; AI không được ghi nhận là tác giả của bất kỳ claim kỹ thuật nào | Đủ điều kiện về mặt trách nhiệm vận hành |
 
-**Nguyên tắc nhóm thống nhất:** C1 là ràng buộc chặn. Nếu C1 không giải quyết được thì mọi thảo luận về Rule / Workflow / Agent ở Phase 6 đều là giả định, và quyết định cuối phải là **Not Yet** kèm việc "làm rõ chính sách bảo mật tài liệu hãng" là việc đầu tiên phải làm.
+**Tổng kết ràng buộc:** ba trong bốn ràng buộc đã được gỡ. **C1 — ràng buộc chặn quan trọng nhất — đã xác nhận là được phép dùng công cụ AI**, nên phương án Workflow không còn bị chặn về mặt pháp lý/hợp đồng.
+
+Ràng buộc còn lại là **C3 (baseline chưa đo)**. Đây không phải ràng buộc chặn theo nghĩa "không được làm", mà là ràng buộc về độ tin cậy: nhóm chưa biết mức cải thiện thật là bao nhiêu. Cách gỡ C3 không phải là chờ thêm, mà là **đo trong một pilot nhỏ** — xem quyết định ở mục 6.3.
 
 ---
 
@@ -467,7 +513,7 @@ và tính đúng đắn của tài liệu.
 | Số bước người vẫn làm | 7/7 | 5/7 | Người giữ bước 2, 4, 5, 6 và quyết định publish |
 | Bottleneck chính | Đọc/định vị trong RM | Viết bối cảnh sản phẩm + verify trích dẫn | Bottleneck mới là điểm kiểm soát chất lượng |
 | Rủi ro mới | Không có | AI trích sai / bịa register → lỗi nhân bản ra toàn team | Chặn bằng bắt buộc trích dẫn + verify + review senior |
-| Rủi ro bảo mật mới | Không có | Đưa tài liệu hãng vào công cụ AI | **Ràng buộc chặn C1 ở mục 4.3** |
+| Rủi ro bảo mật mới | Không có | Đưa tài liệu hãng vào công cụ AI | Ràng buộc C1 ở mục 4.3 — **đã xác nhận được phép**. Vẫn phải giới hạn ở công cụ được công ty duyệt |
 
 **Nếu bỏ hoàn toàn phần AI:** quy trình về ~20h nhờ bước 0, 2 và 7 (đều là Rule). Nghĩa là **62% mức cải thiện đến từ phần không cần AI**. Nhóm ghi nhận điều này vì nó ảnh hưởng trực tiếp tới lựa chọn ở Phase 6.
 
@@ -542,7 +588,7 @@ Nhóm buộc phải trả lời: **nếu độ mơ hồ thấp và độ phức 
 |---|---|---|---|---|---|
 | **No AI / process fix** | Template tài liệu + checklist ~9 peripheral + thư viện tài liệu tái sử dụng giữa các dự án cùng họ chip | 32h → ~26h | Đủ nếu phần lớn thời gian nằm ở format và cấu trúc | Không rủi ro. Nhưng không chạm được bước 3 | **Có — làm ngay, ưu tiên số 1** |
 | **Rule** | Thêm: script nạp tài liệu, index theo peripheral, docs-as-code, cảnh báo khi hãng release SDK mới | 32h → **~20h** | Đủ nếu chấp nhận vẫn phải đọc RM thủ công | Không rủi ro bảo mật, không hallucination | **Có — làm ngay, ưu tiên số 2** |
-| **Workflow** | Thêm bước 3: AI trích + định vị nội dung trong RM kèm số trang → người verify | 32h → **~13h** | Hợp vì các bước tuyến tính, AI chỉ hỗ trợ một bước, có nguồn để đối chiếu | AI trích sai/bịa register → lỗi nhân bản ra toàn team. **Rủi ro NDA khi đưa tài liệu hãng lên công cụ AI** | **Chưa — chờ giải quyết C1** |
+| **Workflow** | Thêm bước 3: AI trích + định vị nội dung trong RM kèm số trang → người verify | 32h → **~13h** | Hợp vì các bước tuyến tính, AI chỉ hỗ trợ một bước, có nguồn để đối chiếu | AI trích sai/bịa register → lỗi nhân bản ra toàn team. Rủi ro NDA **đã được gỡ** (C1 xác nhận được phép) | **Có — nhưng chạy pilot đo lường trước** |
 | **Agent** | Agent tự đọc tài liệu, tự quyết định đọc thêm gì, tự cập nhật tài liệu khi hãng release bản mới, tự publish | Không ước lượng được | Chỉ cần nếu có nhiều nhánh quyết định và nhiều tool | Quyền truy cập rộng, khó truy vết khi sai, không có điểm dừng cho người kiểm | **Không** |
 
 ### Trả lời câu hỏi khó nhất: vì sao Rule không đủ?
@@ -551,7 +597,7 @@ Rule đưa được 32h → ~20h, tức **62% mức cải thiện mà không có
 
 Lý do Rule không thể đi xa hơn: bước 3 đòi hỏi **hiểu ngữ nghĩa**. Tìm "section nào nói về cách giữ SPI hoạt động khi vào stop mode" không giải được bằng tìm kiếm từ khóa, vì Reference Manual không dùng đúng cụm từ đó — nội dung nằm rải ở chương power management và chương SPI, mô tả bằng thuật ngữ register. Đây đúng là chỗ Rule bó tay và AI có lợi thế thật.
 
-Nhưng nhóm ghi nhận thẳng: **38% cải thiện có đáng đổi lấy rủi ro NDA và rủi ro tài liệu sai lan ra toàn team hay không, là câu hỏi chưa trả lời được** khi C1 chưa làm rõ và baseline chưa đo.
+Sau khi C1 được gỡ (được phép dùng công cụ AI), câu hỏi thu lại còn một vế: **38% cải thiện có đáng đổi lấy rủi ro tài liệu sai lan ra toàn team hay không?** Câu này trả lời được bằng một phép đo rẻ — cho AI trích thử 20 mục từ một chương đã biết đáp án và đếm tỉ lệ trích dẫn sai. Nếu tỉ lệ sai thấp thì thời gian verify nằm trong dự tính và phần AI đáng làm; nếu cao thì verify sẽ ngốn hết phần tiết kiệm được. Đây là lý do nhóm chọn chạy pilot đo lường thay vì tiếp tục chờ (xem 6.3).
 
 ### Vì sao không chọn Agent
 
@@ -565,7 +611,9 @@ Nhưng nhóm ghi nhận thẳng: **38% cải thiện có đáng đổi lấy r�
 Hai mức, triển khai theo thứ tự:
 
 1. No AI + Rule  →  TRIỂN KHAI NGAY (32h → ~20h, không rủi ro)
-2. Workflow      →  CHƯA, chờ giải quyết ràng buộc C1 (NDA) và đo baseline
+2. Workflow      →  CHẠY PILOT ĐO LƯỜNG trước khi triển khai rộng
+                    (ràng buộc NDA đã được gỡ; còn phải đo baseline và
+                     tỉ lệ trích dẫn sai)
 
 Không chọn Agent.
 ```
@@ -612,109 +660,127 @@ Khác với v0 ở bốn chỗ: thu hẹp phạm vi AI theo kết quả research
 | **Success Metric** | Giai đoạn 1 (Rule): ~32h → ~20h. Giai đoạn 2 (thêm AI): ~20h → dưới 16h. Guardrail: bug loại `doc-gap` không tăng (≤3/dự án); 100% claim kỹ thuật có trích dẫn kiểm được. **Toàn bộ số hiện trạng là ước lượng chưa đo — việc đầu tiên của pilot là đo lại baseline.** |
 | **Boundary** | **Làm:** AI trích xuất và định vị nội dung trong Reference Manual theo checklist peripheral, bắt buộc kèm số trang và tên register.<br>**Không làm:** AI không viết phần khuyến nghị áp dụng và đánh đổi; không đọc errata để tự kết luận cấu hình hợp lệ; không tự publish; không thay người chịu trách nhiệm. Claim không có trích dẫn kiểm được thì không vào tài liệu. |
 | **AI intervention point** | **Đúng một điểm: bước 3.** Sau khi checklist peripheral đã có (bước 2), trước khi Tech Lead verify (bước 4). Sáu bước còn lại là người hoặc Rule. |
-| **Mức chọn** | **Giai đoạn 1 — No AI + Rule (làm ngay).** Giai đoạn 2 — Workflow, chỉ triển khai sau khi giải quyết ràng buộc NDA. Không chọn Agent. |
+| **Mức chọn** | **Giai đoạn 1 — No AI + Rule (làm ngay).** Giai đoạn 2 — Workflow, chạy pilot đo lường trước khi triển khai rộng. Ràng buộc NDA đã được xác nhận là cho phép. Không chọn Agent. |
 | **Rủi ro & người thật kiểm tra** | **Rủi ro:** AI trích sai trang hoặc bịa tên register → tài liệu sai nhân bản ra 5 developer → cấu hình sai phần cứng. Rủi ro bảo mật: đưa tài liệu hãng có NDA lên công cụ AI.<br>**Người kiểm:** Tech Lead verify trích dẫn trên PDF gốc (bước 4) và là người duy nhất publish. Senior dev review lần hai (bước 6).<br>**Người chịu trách nhiệm cuối:** Tech Lead. AI không được ghi nhận là tác giả của bất kỳ claim kỹ thuật nào. |
 
 ## 6.3 — Final decision
 
 | Câu hỏi | Yes / Not Yet / No | Ghi chú |
 |---|---|---|
-| Actor và workflow đã rõ chưa? | **Yes** | Workflow 7 bước có actor, input, output, thời gian, handoff đầy đủ ở mục 5.1 |
-| Baseline và success metric đã đo được chưa? | **Not Yet** | Baseline ~32h là ước lượng của một người, chưa có log. Ràng buộc C3 |
-| Có data/input đủ dùng chưa? | **Not Yet** | Tài liệu có sẵn, nhưng **chưa rõ có được phép đưa vào công cụ AI hay không**. Ràng buộc chặn C1 |
-| Nếu AI sai, hậu quả có chấp nhận được không? | **Yes, có điều kiện** | Chấp nhận được **chỉ khi** giữ ràng buộc bắt buộc trích dẫn + verify + review senior. Bỏ một trong ba lớp này thì không chấp nhận được |
-| Có người review/owner vận hành không? | **Yes** | Tech Lead verify và publish; senior dev review lần hai |
-| Có cách non-AI đơn giản hơn không? | **Yes** | Rule đạt ~62% mức cải thiện mà không có rủi ro. Đây là lý do chính dẫn tới quyết định dưới đây |
+| Actor và workflow đã rõ chưa? | **Yes** | Workflow 7 bước có actor, input, output, thời gian, handoff đầy đủ ở mục 5.1. Phỏng vấn tầng 1 xác nhận đúng thứ tự các bước tốn thời gian |
+| Baseline và success metric đã đo được chưa? | **Not Yet** | Baseline ~32h vẫn là ước lượng, chưa có log. Ràng buộc C3 — ràng buộc còn lại duy nhất |
+| Có data/input đủ dùng chưa? | **Yes** | Tài liệu có sẵn, và **C1 đã xác nhận được phép đưa vào công cụ AI** |
+| Nếu AI sai, hậu quả có chấp nhận được không? | **Yes, có điều kiện** | Chấp nhận được **chỉ khi** giữ đủ ba lớp: bắt buộc trích dẫn + Tech Lead verify + senior review. Bỏ một lớp thì không chấp nhận được |
+| Có người review/owner vận hành không? | **Yes** | Tech Lead verify, publish và chịu trách nhiệm cuối; senior dev review lần hai. Ràng buộc C4 đã làm rõ |
+| Có cách non-AI đơn giản hơn không? | **Yes** | Rule đạt ~62% mức cải thiện mà không có rủi ro. Vì vậy Rule làm trước, không phải làm thay |
 
 **Decision:**
 
 ```text
-NOT YET cho phần AI (Workflow).
-GO NGAY cho phần No AI + Rule.
+GO — với pilot đo lường, phạm vi rất nhỏ.
+
+Giai đoạn 1: No AI + Rule  → triển khai ngay, không điều kiện.
+Giai đoạn 2: Workflow      → pilot 1 dự án, mục tiêu đầu tiên là ĐO,
+                              chưa phải triển khai rộng.
 ```
+
+**Quyết định này đã thay đổi so với bản thảo luận đầu Phase 6.** Lúc đó nhóm nghiêng về **Not Yet** vì ràng buộc C1 (NDA) chưa làm rõ. Sau khi xác nhận được là **công ty cho phép dùng công cụ AI**, ràng buộc chặn biến mất và nhóm chuyển sang Go có điều kiện. Nhóm giữ lại dấu vết thay đổi này vì nó cho thấy quyết định bám theo bằng chứng, không phải chốt sẵn từ đầu.
 
 **Lý do:**
 
 ```text
-Nhóm chọn Not Yet cho phần AI vì ba lý do, xếp theo mức độ quan trọng:
+VÌ SAO KHÔNG CÒN LÀ NOT YET:
 
-1. RÀNG BUỘC CHẶN CHƯA GIẢI QUYẾT (C1)
-   Tài liệu hãng thường kèm NDA. Nếu công ty không cho phép đưa tài liệu lên
-   công cụ AI cloud, toàn bộ phương án Workflow phải làm lại theo hướng
-   self-hosted với chi phí và công sức khác hẳn. Quyết định Go khi chưa biết
-   điều này là quyết định trên giả định.
+1. Ràng buộc chặn C1 đã được gỡ — xác nhận công ty cho phép dùng công cụ AI.
+   Đây là lý do số 1 khiến nhóm định chọn Not Yet, và nó không còn nữa.
 
-2. BASELINE CHƯA ĐO (C3)
-   Con số 32h là ước lượng của một người. Nếu thực tế chỉ 15h thì mức cải
-   thiện của Rule đã đủ tốt và phần AI mất phần lớn giá trị.
+2. Phỏng vấn tầng 1 xác nhận đúng hai giả định quan trọng nhất: bottleneck
+   nằm ở bước đọc/định vị, và actor có bàn giao tài liệu cho người khác.
+   Không có tín hiệu phản bác nào trong bốn điều kiện phản bác đã chốt trước.
 
-3. RULE ĐÃ LẤY ĐƯỢC 62% MÀ KHÔNG CÓ RỦI RO
-   Làm Rule trước là quyết định đúng về mặt thứ tự, bất kể sau này có làm AI
-   hay không. Rule cũng là điều kiện cần: không có checklist peripheral thì
-   AI ở bước 3 không có đầu vào để làm việc.
+3. Ràng buộc còn lại (C3 — baseline chưa đo) KHÔNG gỡ được bằng cách chờ.
+   Chờ thêm không sinh ra số liệu. Chỉ có bắt tay làm và đo mới sinh ra.
+   Chọn Not Yet lúc này là chờ một thông tin mà chỉ hành động mới tạo ra được.
 
-Không chọn No-Go, vì bước 3 có khoảng trống thật mà Rule không giải được, và
-bài toán có nguồn gốc kiểm chứng được nên rủi ro AI là kiểm soát được — chỉ
-là chưa đủ điều kiện để bắt đầu.
+VÌ SAO KHÔNG PHẢI GO TOÀN PHẦN:
+
+Baseline vẫn chưa đo và tỉ lệ trích dẫn sai của AI chưa biết. Vì vậy pilot có
+mục tiêu là ĐO chứ không phải triển khai: đo baseline thật, đo tỉ lệ AI trích
+sai, rồi mới quyết định mở rộng hay dừng.
+
+VÌ SAO KHÔNG PHẢI NO-GO:
+
+Bước 3 có khoảng trống thật mà tìm kiếm từ khóa không giải được, và bài toán
+có nguồn gốc kiểm chứng được (Reference Manual) nên rủi ro AI kiểm soát được
+bằng ràng buộc trích dẫn.
+
+LƯU Ý VỀ THỨ TỰ: Giai đoạn 1 chạy trước và độc lập. Kể cả khi pilot giai đoạn
+2 thất bại, ~62% mức cải thiện vẫn giữ được.
 ```
 
-**Việc làm ngay (phần Go — không cần AI, không cần xin phép ai):**
+**Việc làm ngay — Giai đoạn 1 (không cần AI, không phụ thuộc pilot):**
 
 ```text
 1. Viết template tài liệu nội bộ + checklist ~9 peripheral.  (bước 0)
 2. Script nạp tài liệu và index theo peripheral.             (bước 1)
 3. Chuyển publish sang docs-as-code.                          (bước 7)
 
-Kỳ vọng: ~32h → ~20h. Không có rủi ro bảo mật, không có hallucination.
-Đây cũng là hạ tầng bắt buộc cho giai đoạn 2 nếu sau này làm AI.
+Kỳ vọng: ~32h → ~20h. Không rủi ro bảo mật, không hallucination.
+Đây cũng là hạ tầng bắt buộc cho giai đoạn 2: không có checklist peripheral
+thì AI ở bước 3 không có đầu vào để làm việc.
 ```
 
-**Nếu Not Yet, cần validate gì trước:**
+**Pilot nhỏ nhất — Giai đoạn 2:**
 
 ```text
-Theo thứ tự ưu tiên:
+PHẠM VI: 1 dự án, 2-3 peripheral (không phải cả 9), 1 người dùng là Tech Lead.
 
-1. LÀM RÕ CHÍNH SÁCH NDA (C1) — việc chặn, phải làm đầu tiên.
-   Đọc điều khoản trên trang tải tài liệu của hãng; xác nhận công ty cho phép
-   dùng loại công cụ AI nào (cloud / self-hosted / có thỏa thuận doanh nghiệp).
+CÁCH CHẠY:
+1. Trước khi bắt đầu: Tech Lead log thời gian từng bước theo cách làm cũ
+   → đây chính là phép đo baseline, gỡ ràng buộc C3.
+2. Cho AI trích + định vị nội dung cho 2-3 peripheral đó, bắt buộc kèm số
+   trang và tên register.
+3. Tech Lead verify từng trích dẫn trên PDF gốc, đếm số trích dẫn sai.
+4. So sánh tổng thời gian với baseline vừa đo.
 
-2. ĐO BASELINE THẬT (C3).
-   Log thời gian theo từng bước trong một dự án. Nếu bước 3 không thật sự
-   chiếm ~37% thời gian thì phải chọn lại bottleneck.
+BA SỐ CẦN THU:
+- Baseline thật cho từng bước (đặc biệt bước 3).
+- Tỉ lệ trích dẫn sai của AI (sai trang, sai tên register, bịa nội dung).
+- Thời gian verify thực tế so với dự tính 3h.
 
-3. PHỎNG VẤN 2-3 NGƯỜI LÀM EMBEDDED THẬT (mục 4.1, chưa làm được).
-   Đặc biệt câu 4: họ có bàn giao tài liệu cho người khác không? Nếu không
-   thì bài toán thuộc cụm D chứ không phải cụm A, và lựa chọn candidate ở
-   Phase 3 phải xem lại.
+TIÊU CHÍ MỞ RỘNG:
+- Tỉ lệ trích dẫn sai đủ thấp để verify xong trong ~3h, VÀ
+- tổng thời gian giảm được ít nhất 25% so với mức Rule (~20h), VÀ
+- không phát sinh bug loại doc-gap từ tài liệu của pilot.
 
-4. THỬ NGHIỆM NHỎ ĐỂ ĐO TỈ LỆ TRÍCH DẪN SAI.
-   Cho AI trích 20 mục từ một chương RM đã biết đáp án, đếm bao nhiêu trích
-   dẫn sai trang hoặc bịa tên register. Nếu tỉ lệ sai cao thì thời gian verify
-   ở bước 4 sẽ vượt xa 3h và toàn bộ lợi ích biến mất.
-
-TIÊU CHÍ CHUYỂN TỪ NOT YET SANG GO:
-- C1 được xác nhận là cho phép, và
-- baseline đo thật cho thấy bước 3 vẫn là bottleneck lớn nhất, và
-- tỉ lệ trích dẫn sai ở thử nghiệm nhỏ đủ thấp để verify trong ~3h.
-Thiếu một trong ba thì vẫn giữ Not Yet.
+TIÊU CHÍ DỪNG (rollback):
+- Nếu Tech Lead phải kiểm lại quá 50% trích dẫn vì AI sai → dừng phần AI,
+  giữ nguyên giai đoạn 1.
+- Nếu AI bịa tên register dù chỉ một lần mà không bị phát hiện ở bước verify
+  → dừng ngay, vì lớp chặn đã thủng.
+- Nếu baseline đo thật thấp hơn nhiều so với ~32h → phần AI mất phần lớn giá
+  trị, dừng và giữ mức Rule.
 ```
 
-**Nếu No-Go, nên làm gì thay AI:**
+**Nếu pilot thất bại, phương án thay thế:**
 
 ```text
 Dừng ở mức Rule: template + checklist + docs-as-code + cảnh báo lệch phiên
-bản SDK. Kết hợp với việc dùng Application Note của hãng làm nguồn chính cho
-phần "khi nào dùng" ở các use case phổ biến.
+bản SDK, kết hợp dùng Application Note của hãng làm nguồn chính cho phần
+"khi nào dùng" ở các use case phổ biến.
 
 Phương án này đạt ~20h/dự án, không rủi ro, và vẫn giải quyết được vấn đề
-tài liệu nội bộ lệch phiên bản khi hãng release SDK mới.
+tài liệu nội bộ lệch phiên bản khi hãng release SDK mới. Đây là kết quả chấp
+nhận được, không phải thất bại.
 ```
 
-### Ghi nhận bất đồng trong nhóm
+### Ghi nhận bất đồng và diễn biến quyết định
 
-Duy (devil's advocate) đặt câu hỏi: nếu Rule đã lấy 62% mà không rủi ro, và ràng buộc NDA có thể khiến phần AI không bao giờ triển khai được, thì nhóm có đang giữ phần AI chỉ vì đây là lab về AI hay không?
+**Bất đồng ban đầu.** Duy (devil's advocate) đặt câu hỏi: nếu Rule đã lấy 62% mà không rủi ro, và ràng buộc NDA có thể khiến phần AI không bao giờ triển khai được, thì nhóm có đang giữ phần AI chỉ vì đây là lab về AI hay không?
 
-Nhóm trả lời: bước 3 có khoảng trống thật mà tìm kiếm từ khóa không giải được, nên phần AI có lý do kỹ thuật chứ không phải lý do hình thức. Nhưng nhóm chấp nhận rằng nếu C1 cho kết quả cấm, quyết định cuối sẽ chuyển thành **No-Go cho AI** và dừng hẳn ở mức Rule — và đó vẫn là một kết quả tốt.
+**Nhóm trả lời:** bước 3 có khoảng trống thật mà tìm kiếm từ khóa không giải được, nên phần AI có lý do kỹ thuật. Nhưng nhóm chấp nhận rằng nếu C1 cho kết quả cấm thì sẽ chuyển thành No-Go cho AI và dừng hẳn ở mức Rule.
+
+**Diễn biến.** Sau khi C1 được xác nhận là cho phép, nhóm chuyển từ Not Yet sang Go có điều kiện. Duy giữ nguyên yêu cầu: pilot phải có tiêu chí dừng rõ ràng và phải đo trước khi mở rộng, để tránh trường hợp đã đầu tư rồi thì ngại dừng. Yêu cầu này được đưa vào phần "Tiêu chí dừng" ở trên.
 
 ---
 
