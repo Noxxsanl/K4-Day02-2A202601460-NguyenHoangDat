@@ -354,86 +354,157 @@ Mục này không có trong worksheet gốc. Nhóm thêm vào vì phát hiện c
 
 # Phase 5 — Workflow + Problem Statement (45')
 
+**Người chủ trì:** Đạt (Domain owner). Cả nhóm soi từng bước và hỏi lại chỗ chưa rõ.
+
 ## 5.1 — Current workflow bản nhóm
 
-Bản dưới đây kế thừa từ Problem Card #1 cá nhân. Nhóm cần bổ sung actor / input / output / handoff cho từng bước và **sửa lại số liệu sau khi validate ở Phase 4**.
-
 ```text
-CURRENT STATE — 7 bước, ~32 giờ công (số liệu chờ validate)
+CURRENT STATE — 7 bước, ~32 giờ công/dự án
+(số liệu là ước lượng của Đạt, chưa đo bằng log — xem ràng buộc C3 ở mục 4.3)
 
 [1 Nhận bộ tài liệu hãng: 1h]
 → [2 Lọc peripheral/tính năng dự án dùng: 4h]
-→ [3 Đọc + định vị nội dung trong RM ~3.300 trang: 12h]   <-- bottleneck thời gian
+→ [3 Đọc + định vị nội dung trong các RM tổng ~3.300 trang: 12h]   <-- BOTTLENECK THỜI GIAN
 → [4 Tra chéo errata + AN + SDK release note: 4h]
-→ [5 Viết docs: mô tả + "khi nào dùng" + "vì sao": 8h]     <-- bottleneck chất lượng
+→ [5 Viết docs: mô tả + "khi nào dùng" + "vì sao": 8h]     <-- BOTTLENECK CHẤT LƯỢNG
 → [6 Review với senior: 2h]
 → [7 Publish Confluence + thông báo team: 1h]
 
-Toàn bộ 7/7 bước là thủ công.
+Toàn bộ 7/7 bước là thủ công. Một người làm gần như toàn bộ (bước 1-5, 7).
+Đây là đường găng: team không bắt đầu code được trước khi có tài liệu nội bộ.
 ```
 
-| Bước | Actor | Input | Output | Thời gian/tần suất | Handoff / ghi chú |
-|---|---|---|---|---|---|
-| 1 | Tech Lead | Bộ tài liệu từ hãng | Kho tài liệu dự án | 1h | |
-| 2 | Tech Lead | Spec sản phẩm + tài liệu hãng | Danh sách peripheral cần dùng | 4h | |
-| 3 | Tech Lead | Reference Manual ~3.300 trang | Các section liên quan | 12h | **Bottleneck thời gian** |
-| 4 | Tech Lead | Errata + AN + SDK release note | Xác nhận cấu hình hợp lệ | 4h | |
-| 5 | Tech Lead | Nội dung đã trích | Docs nội bộ có "khi nào dùng / vì sao" | 8h | **Bottleneck chất lượng** |
-| 6 | Senior dev | Bản nháp docs | Docs đã review | 2h | Handoff Lead → Senior |
-| 7 | Tech Lead | Docs đã review | Docs publish trên Confluence | 1h | Handoff Lead → cả team |
+| Bước | Actor | Input | Output | Thời gian | Handoff / ghi chú |
+|---|---|---|---|---:|---|
+| 1 | Tech Lead | Bộ tài liệu từ hãng (datasheet, RM, errata, AN, SDK) | Kho tài liệu dự án | 1h | Nhận từ hãng hoặc bộ phận mua hàng |
+| 2 | Tech Lead | Spec sản phẩm + tài liệu hãng | Danh sách peripheral và tính năng dự án dùng | 4h | Cần hiểu spec sản phẩm, không chỉ đọc tài liệu |
+| 3 | Tech Lead | Reference Manual ~3.300 trang | Các section liên quan tới danh sách ở bước 2 | 12h | **Bottleneck thời gian.** Không có handoff — một người làm |
+| 4 | Tech Lead | Errata + Application Note + SDK release note | Xác nhận cấu hình hợp lệ, không dính lỗi silicon | 4h | Phải tra chéo 4 nguồn cho mỗi cấu hình khó |
+| 5 | Tech Lead | Nội dung đã trích ở bước 3-4 + kinh nghiệm dự án | Docs nội bộ có "khi nào dùng / vì sao / đánh đổi" | 8h | **Bottleneck chất lượng.** Phần tạo ra giá trị thật |
+| 6 | Senior dev | Bản nháp docs | Docs đã review | 2h | **Handoff Lead → Senior.** Điểm chờ đợi duy nhất |
+| 7 | Tech Lead | Docs đã review | Docs publish trên Confluence | 1h | **Handoff Lead → cả team.** Sau bước này team mới bắt đầu code |
 
 **Bottleneck chính:**
 
 ```text
-[Nhóm chốt lại sau khi thảo luận. Lưu ý phân biệt 2 loại bottleneck ở trên —
-đây là điểm quyết định AI nên can thiệp ở bước nào.]
+Nhóm chốt: workflow này có HAI bottleneck khác nhau về bản chất, và việc tách
+được chúng là điểm quan trọng nhất của cả bài.
+
+BOTTLENECK THỜI GIAN — Bước 3 (~12h, chiếm 37% tổng thời gian)
+Đọc và định vị nội dung trong Reference Manual. Phần lớn công việc là tìm
+kiếm và trích xuất: xác định section nào liên quan tới peripheral nào. Việc
+này tốn thời gian nhưng KHÔNG đòi hỏi phán đoán kỹ thuật cao.
+
+BOTTLENECK CHẤT LƯỢNG — Bước 5 (~8h)
+Viết phần "khi nào dùng / vì sao chọn / đánh đổi là gì". Tốn ít thời gian hơn
+nhưng đòi hỏi kinh nghiệm dự án và hiểu bối cảnh sản phẩm. Đây là chỗ Tech
+Lead tạo ra giá trị mà tài liệu hãng không có. Nếu bước này làm ẩu thì sinh
+ra loại bug "dev làm đúng theo docs nhưng vẫn sai".
+
+VÌ SAO PHẢI TÁCH:
+Nếu chỉ nói "bottleneck là viết tài liệu" thì không biết đặt AI ở đâu.
+Tách ra thì thấy rõ: bước 3 là ứng viên cho AI, bước 5 phải giữ cho người.
+Đây là cơ sở cho toàn bộ future workflow và boundary ở mục 5.2.
 ```
 
 ## 5.2 — Future workflow bản nhóm
 
+Bản này **khác với draft trong Problem Card #1 cá nhân**, vì research ở mục 4.2 đã thu hẹp phạm vi:
+
+| Thay đổi so với draft cá nhân | Lý do (từ Phase 4) |
+|---|---|
+| Thêm bước 0 — làm template + checklist **trước**, không dùng AI | R5: đây là phần chắc chắn có hiệu quả, không rủi ro, phải làm trước hoặc song song |
+| Application Note được đưa vào làm **input cho người**, không phải cho AI | R2: AN đã phủ "khi nào dùng" cho use case phổ biến. Người đọc AN trước rồi chỉ viết thêm phần bối cảnh sản phẩm |
+| Thời gian bước 5 giảm từ 8h xuống 5h thay vì giữ nguyên 6h | Vì phần "vì sao" đã hẹp lại: chỉ còn bối cảnh sản phẩm cụ thể, không phải viết từ đầu |
+| Publish chuyển sang docs-as-code | R3: giải luôn được vấn đề tài liệu lệch phiên bản khi hãng update SDK |
+
 ```text
-[Nhóm vẽ lại. Draft kế thừa từ Card #1:]
+FUTURE STATE — 7 bước + 1 bước chuẩn bị, ~13 giờ công/dự án
 
-FUTURE STATE — 7 bước, ~14 giờ công
+[0 CHUẨN BỊ MỘT LẦN: template docs + checklist ~9 peripheral]  -- Rule, không AI
+   Làm một lần, dùng lại cho mọi dự án. Không phụ thuộc AI.
 
-[1 Nạp RM/datasheet/errata/SDK vào kho tài liệu dự án: 0.5h]  -- Rule/script
-→ [2 AI trích + định vị theo checklist peripheral: 1h]         -- AI, bắt buộc kèm số trang
-→ [3 Tech Lead verify trích dẫn trên PDF gốc: 3h]              <-- human boundary
-→ [4 AI draft docs theo template nội bộ: 0.5h]                 -- AI
-→ [5 Tech Lead viết "khi nào dùng / vì sao / đánh đổi": 6h]    <-- human boundary, GIỮ NGUYÊN
-→ [6 Review với senior: 2h]
-→ [7 Publish: 1h]
+[1 Nạp RM/datasheet/errata/SDK vào kho tài liệu dự án: 0.5h]   -- Rule/script
+→ [2 Lọc peripheral theo spec sản phẩm: 2h]                     -- Người, có checklist từ bước 0
+→ [3 AI trích + định vị theo checklist, KÈM SỐ TRANG: 1h]       -- AI  ← điểm can thiệp duy nhất
+→ [4 Tech Lead verify trích dẫn trên PDF gốc: 3h]               <-- HUMAN BOUNDARY
+→ [5 Tech Lead đọc AN + viết phần bối cảnh sản phẩm: 5h]        <-- HUMAN BOUNDARY, không giao AI
+→ [6 Review với senior: 1.5h]                                   -- Người
+→ [7 Publish qua docs-as-code: 0.5h]                            -- Rule
 
-Boundary:
-- AI không viết phần khuyến nghị áp dụng và đánh đổi kỹ thuật.
-- Mọi claim kỹ thuật phải có số trang + tên register trong tài liệu gốc.
-- AI không tự publish.
+AI CHỈ XUẤT HIỆN Ở BƯỚC 3. Sáu bước còn lại là người hoặc Rule.
 
-Fallback:
-AI trích sai trang hoặc bịa tên register → bỏ toàn bộ output lượt đó, đọc RM
-trực tiếp như quy trình cũ. Không sửa vá output sai.
+BOUNDARY:
+- AI không viết phần khuyến nghị áp dụng và đánh đổi kỹ thuật (bước 5).
+- Mọi claim kỹ thuật do AI sinh ra phải kèm số trang + tên register trong
+  tài liệu gốc. Không có trích dẫn kiểm được thì không đưa vào docs.
+- AI không tự publish. Tech Lead là người duy nhất publish và chịu trách nhiệm.
+- AI không đọc errata để tự kết luận cấu hình hợp lệ — bước này rủi ro quá cao,
+  giữ cho người.
+
+FALLBACK:
+AI trích sai trang hoặc bịa tên register → bỏ TOÀN BỘ output của lượt đó,
+Tech Lead đọc RM trực tiếp như quy trình cũ. Không sửa vá output sai, vì sửa
+vá thì không biết còn sai chỗ nào chưa phát hiện.
+
+Quy trình vẫn chạy được nếu bỏ hoàn toàn bước 3 AI — khi đó về đúng ~20h,
+vẫn tốt hơn 32h nhờ bước 0, 2 và 7. Đây là lý do nhóm tự tin về rủi ro:
+AI là phần tăng thêm, không phải phần chống đỡ cả quy trình.
+
+BOTTLENECK MỚI:
+Bước 5 (viết bối cảnh sản phẩm, 5h) và bước 4 (verify trích dẫn, 3h).
+Đây là bottleneck CHẤP NHẬN ĐƯỢC vì chính là hai điểm kiểm soát chất lượng
+và tính đúng đắn của tài liệu.
 ```
 
 **Before/after impact:**
 
-| Metric | Trước | Sau kỳ vọng | Ghi chú |
+| Chỉ số | Trước | Sau kỳ vọng | Ghi chú |
 |---|---:|---:|---|
-| Tổng thời gian | ~32h công/dự án | Dưới 16h | Metric chính |
-| Số bước | 7 | 7 | Không giảm số bước, giảm effort trong bước |
-| Số bước thủ công | 7/7 | 5/7 | Người vẫn verify, viết "vì sao", review, publish |
-| Bottleneck chính | Đọc/định vị trong RM | Verify trích dẫn + viết "vì sao" | Bottleneck mới là điểm kiểm soát chất lượng |
-| Risk mới | Không có | AI trích sai / bịa register → lỗi nhân bản ra toàn team | Bắt buộc verify trích dẫn |
+| Tổng thời gian | ~32h công/dự án | ~13h | Metric chính. Cả hai số đều chưa đo bằng log |
+| Thời gian bước bottleneck cũ (bước 3) | 12h | 1h AI + 3h verify = 4h | Giảm mạnh nhất ở đây |
+| Số bước có AI tham gia | 0/7 | 1/7 | AI chỉ ở bước 3 |
+| Số bước người vẫn làm | 7/7 | 5/7 | Người giữ bước 2, 4, 5, 6 và quyết định publish |
+| Bottleneck chính | Đọc/định vị trong RM | Viết bối cảnh sản phẩm + verify trích dẫn | Bottleneck mới là điểm kiểm soát chất lượng |
+| Rủi ro mới | Không có | AI trích sai / bịa register → lỗi nhân bản ra toàn team | Chặn bằng bắt buộc trích dẫn + verify + review senior |
+| Rủi ro bảo mật mới | Không có | Đưa tài liệu hãng vào công cụ AI | **Ràng buộc chặn C1 ở mục 4.3** |
+
+**Nếu bỏ hoàn toàn phần AI:** quy trình về ~20h nhờ bước 0, 2 và 7 (đều là Rule). Nghĩa là **62% mức cải thiện đến từ phần không cần AI**. Nhóm ghi nhận điều này vì nó ảnh hưởng trực tiếp tới lựa chọn ở Phase 6.
 
 ## 5.3 — Problem Statement v0
 
+**Người chủ trì:** Giang (PS owner). Cả nhóm phản biện từng field.
+
 | Field | Nội dung |
 |---|---|
-| **Actor** |  |
-| **Workflow** |  |
-| **Bottleneck** |  |
-| **Impact** |  |
-| **Success Metric** |  |
-| **Boundary** |  |
+| **Actor** | Tech Lead của đội embedded (~5 developer) trong công ty sản xuất thiết bị, là người duy nhất chịu trách nhiệm viết tài liệu kỹ thuật nội bộ cho mỗi dự án mới. Người dùng đầu ra là 5 developer trong team. |
+| **Workflow** | Mỗi khi nhận dự án dùng dòng chip mới (~2-3 lần/năm): nhận bộ tài liệu hãng → lọc peripheral theo spec sản phẩm → đọc và định vị nội dung trong Reference Manual ~3.300 trang → tra chéo errata/Application Note/SDK release note → viết tài liệu nội bộ kèm phần "khi nào dùng / vì sao" → senior review → publish lên Confluence cho team. Tổng ~32 giờ công. |
+| **Bottleneck** | **Bước 3 — đọc và định vị nội dung trong Reference Manual, ~12 giờ (37% tổng thời gian).** Phần lớn là công việc tìm kiếm và trích xuất, không đòi hỏi phán đoán kỹ thuật cao. Tách riêng với bước 5 (~8 giờ) là bottleneck về chất lượng, nơi Tech Lead viết phần bối cảnh sản phẩm mà tài liệu hãng không có. |
+| **Impact** | ~32 giờ công/dự án cho một người, lặp 2-3 lần/năm. Đây là đường găng: team bị chặn hoặc phải làm với tài liệu chưa hoàn chỉnh. Hệ quả kéo theo: ~2-3 bug/dự án loại "dev làm đúng theo docs nhưng vẫn sai" do tài liệu thiếu điều kiện áp dụng, mỗi bug tốn ~0.5-1 ngày để truy. |
+| **Success Metric** | Xem bảng chi tiết bên dưới. Metric chính: giảm thời gian tạo tài liệu từ ~32h xuống dưới 16h công/dự án, **với điều kiện không làm tăng số bug loại `doc-gap`**. |
+| **Boundary** | **Làm:** AI trích xuất và định vị nội dung trong Reference Manual theo checklist peripheral, bắt buộc kèm số trang và tên register kiểm được.<br>**Không làm:** AI không viết phần khuyến nghị áp dụng và đánh đổi kỹ thuật; không đọc errata để tự kết luận cấu hình hợp lệ; không tự publish; không thay Tech Lead chịu trách nhiệm về nội dung. Mọi claim không có trích dẫn kiểm được thì không đưa vào tài liệu. |
+
+### Success Metric chi tiết
+
+| Chỉ số | Hiện trạng | Mục tiêu | Cách đo | Loại |
+|---|---|---|---|---|
+| Thời gian tạo tài liệu nội bộ | ~32 giờ công/dự án *(chưa đo)* | Dưới 16 giờ công/dự án | Tech Lead log thời gian theo từng bước trong 1 dự án | **Chính** |
+| Bug loại "làm đúng docs nhưng vẫn sai" | ~2-3 bug/dự án *(chưa đo)* | Không tăng (≤3) | Đếm ticket gán nhãn `doc-gap` trong bug tracker | **Guardrail** |
+| Tỉ lệ claim kỹ thuật có trích dẫn kiểm được | Không áp dụng | 100% | Kiểm ngẫu nhiên 20 claim trong tài liệu đã publish | **Guardrail** |
+| Câu hỏi lặp lại của dev về nội dung đã có trong docs | ~5-8 câu/tuần (4 tuần đầu) *(chưa đo)* | Giảm còn ~3 câu/tuần | Đếm trong channel Teams của dự án | Phụ |
+
+⚠️ **Cảnh báo về metric:** ba trong bốn chỉ số hiện trạng đánh dấu *(chưa đo)* — đây là ước lượng của một thành viên, chưa có log thời gian hay số liệu từ bug tracker (ràng buộc C3 ở mục 4.3). Metric chỉ có hiệu lực sau khi baseline được đo thật. Nhóm ghi rõ điều này thay vì trình bày như số liệu đã xác nhận.
+
+Metric thời gian là metric chính, nhưng **hai guardrail quan trọng ngang bằng**: nếu tài liệu làm nhanh hơn mà team hiểu sai nhiều hơn, hoặc tài liệu có claim không truy được nguồn, thì coi như thất bại chứ không phải thành công một phần.
+
+### Nhóm phản biện PS v0 — các field còn yếu
+
+| Field | Điểm yếu nhóm tự thấy | Xử lý ở PS v1 |
+|---|---|---|
+| Impact | Chỉ ảnh hưởng 1 team ~6 người, quy mô nhỏ so với các candidate khác | Giữ nguyên, nhưng nói rõ đây là bài toán lặp lại và nằm trên đường găng |
+| Success Metric | Baseline chưa đo, nên "dưới 16h" là mục tiêu dựa trên giả định | Ghi rõ là giả định; đưa "đo lại baseline" vào pilot |
+| Boundary | Chưa nói ai chịu trách nhiệm khi tài liệu sai (ràng buộc C4) | Bổ sung ở PS v1 |
+| Actor | Nhóm không có ai thật sự giữ vai trò này để kiểm chứng | Không xử lý được trong lab; ghi nhận là giới hạn của bài |
 
 ---
 
